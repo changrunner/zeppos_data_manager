@@ -156,3 +156,20 @@ class DataCleaner:
     @staticmethod
     def clean_filename(filename):
         return re.sub('[^0-9a-zA-Z]+', '_', filename.strip())
+
+    @staticmethod
+    def adjust_escape_character(input_string):
+        return input_string.replace('"', '\\"').replace("'", "\\'") \
+            .replace('\r', '\\r').replace('\n', '\\n')
+
+    @staticmethod
+    def strip_content(string_value, remove_last_line_seperator=True):
+        final_string = ""
+        for line in string_value.split("\n"):
+            line = line.strip()
+            if len(line):
+                final_string += line + "\n"
+        if remove_last_line_seperator:
+            return final_string[:-1]
+        else:
+            return final_string
