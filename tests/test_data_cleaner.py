@@ -80,6 +80,27 @@ class TestTheProjectMethods(unittest.TestCase):
     def test_clean_filename_method(self):
         self.assertEqual(DataCleaner.clean_filename("$my_File_123"), "_my_File_123")
 
+    def test_adjust_escape_character_method(self):
+        self.assertEqual('\\"', DataCleaner.adjust_escape_character('"'))
+        self.assertEqual("\\'", DataCleaner.adjust_escape_character("'"))
+        self.assertEqual('\\r', DataCleaner.adjust_escape_character('\r'))
+        self.assertEqual('\\n', DataCleaner.adjust_escape_character('\n'))
+
+    def test_strip_content_method(self):
+        # don't adjust alignment. The unit test will fail!
+        self.assertEqual("test", DataCleaner.strip_content("   test"))
+        self.assertEqual("""test1
+test2""", DataCleaner.strip_content("""
+                    test1
+                    test2        
+"""))
+        self.assertEqual("""test1
+test2
+""", DataCleaner.strip_content("""
+                    test1
+                    test2        
+""", remove_last_line_seperator=False))
+
 
 if __name__ == '__main__':
     unittest.main()
